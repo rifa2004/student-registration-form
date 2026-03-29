@@ -1,0 +1,29 @@
+{
+  "name": "express_project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build:css": "tailwindcss -i ./src/styles/input.css -o ./public/styles.css --minify",
+    "watch:css": "tailwindcss -i ./src/styles/input.css -o ./public/styles.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "mysql2": "^3.16.0",
+    "open": "^11.0.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "nodemon": "^3.1.11",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.4.7"
+  },
+  "description": ""
+}

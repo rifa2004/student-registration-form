@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Students</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        #list {
+            margin-top: 20px;
+        }
+
+        .student-card {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .student-card:hover {
+            transform: translateX(5px);
+        }
+
+        .student-info {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .student-id {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .student-name {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .student-age {
+            color: #666;
+        }
+
+        .no-students {
+            text-align: center;
+            color: #999;
+            font-size: 18px;
+            padding: 40px;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .link a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .link a:hover {
+            transform: translateY(-2px);
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-size: 18px;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>All Students</h1>
+        <div id="list">
+            <div class="loading">Loading students...</div>
+        </div>
+        <div class="link">
+            <a href="/">Add New Student</a>
+        </div>
+    </div>
+
+    <script>
+        fetch("/students")
+            .then(res => res.json())
+            .then(data => {
+                let output = "";
+                
+                if (data.length === 0) {
+                    output = '<div class="no-students">No students found. Add some students first!</div>';
+                } else {
+                    for (let i = 0; i < data.length; i++) {
+                        output += `
+                            <div class="student-card">
+                                <div class="student-info">
+                                    <span class="student-id">${data[i].id}.</span>
+                                    <span class="student-name">${data[i].name}</span>
+                                    <span class="student-age">— Age: ${data[i].age}</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                document.getElementById("list").innerHTML = output;
+            })
+            .catch(error => {
+                document.getElementById("list").innerHTML = 
+                    '<div class="no-students">Error loading students!</div>';
+                console.error("Error:", error);
+            });
+    </script>
+</body>
+</html>
